@@ -20,8 +20,8 @@ const ProductCard: React.FC<Props> = ({ hasBgImg, isRegalato, isBtnDisabled, pro
 
   return (
     <>
-      <div className={cn('bg-white py-8 rounded-[20px] md:w-[438px] w-full overflow-hidden shadow-card-shadow', {
-        "px-5": !hasBgImg,
+      <div className={cn('bg-white sm:py-8 py-5 rounded-[20px] md:w-[438px] w-full overflow-hidden shadow-card-shadow', {
+        "sm:px-5 px-[30px]": !hasBgImg,
         "px-0": hasBgImg
       })}>
         <div className="flex flex-wrap">
@@ -35,7 +35,7 @@ const ProductCard: React.FC<Props> = ({ hasBgImg, isRegalato, isBtnDisabled, pro
               </p>
             )}
             {!isRegalato && (
-              <p className='bg-primary-bg py-2 px-5 rounded-2xl text-lg text-titles font-light'>
+              <p className='bg-primary-bg py-2 px-5 rounded-2xl sm:text-lg text-sm text-titles font-light'>
                 Scade tra: <span className='font-bold'>02:20:35</span>
               </p>
             )}
@@ -49,16 +49,16 @@ const ProductCard: React.FC<Props> = ({ hasBgImg, isRegalato, isBtnDisabled, pro
             </div>
           )}
           {hasBgImg && (
-            <div className={`w-full h-[300px] -mt-[117px] z-[0]`}>
+            <div className={`w-full max-h-[300px] md:-mt-[117px] sm:-mt-[140px] -mt-[117px] z-[0] overflow-hidden`}>
               <Image src='/product-2.png' alt='product img' width={800} height={800} />
             </div>
           )}
-          <div className={cn("w-full relative z-10 my-10", {
+          <div className={cn("w-full relative z-10 md:my-10 my-5", {
             "px-5": hasBgImg,
             "px-0": !hasBgImg
           })}>
-            <h2 className='text-2xl font-semibold text-titles leading-[29px] mb-2'>{productTitle}</h2>
-            <p className='text-lg text-titles font-light leading-5'>{productDesc}</p>
+            <h2 className='sm:text-2xl text-[22px] font-semibold text-titles leading-[29px] mb-2'>{productTitle}</h2>
+            <p className='sm:text-lg text-base text-titles font-light leading-5'>{productDesc}</p>
           </div>
           <div className="w-full flex justify-center items-center relative z-10">
             <PrimaryBtn disabled={isBtnDisabled} onClick={onBtnClick}>

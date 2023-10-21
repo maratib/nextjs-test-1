@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -76,24 +76,38 @@ export default function Home() {
     },
   ])
 
+  useEffect(() => {
+    if (showModal) document.documentElement.style.overflow = 'hidden'
+    else document.documentElement.style.overflow = 'auto'
+  }, [showModal])
+
   return (
-    <main className='py-20 bg-primary-bg h-screen'>
-      <div className="container mx-auto">
+    <main className='py-20 bg-primary-bg min-h-screen overflow-hidden'>
+      <div className="container mx-auto xl:px-0 md:px-6 px-4">
         <div className="flex flex-wrap">
           <div className="w-full mb-16">
             <h1 className="text-[44px] text-titles font-semibold">Altri Regali</h1>
           </div>
-          <div className="w-full relative flex items-center">
-            <button className="w-[100px] h-[100px] bg-white rounded-full flex items-center justify-center absolute -left-36" onClick={() => slider.current.swiper.slidePrev()}>
+          <div className="w-full relative md:flex hidden items-center">
+            <button className="w-[100px] h-[100px] bg-white rounded-full items-center justify-center absolute -left-32 2xl:flex hidden" onClick={() => slider.current.swiper.slidePrev()}>
               <ArrowIcon />
             </button>
-            <button className="w-[100px] h-[100px] bg-white rounded-full flex items-center justify-center absolute -right-36 transform rotate-180" onClick={() => slider.current.swiper.slideNext()}>
+            <button className="w-[100px] h-[100px] bg-white rounded-full items-center justify-center absolute -right-32 transform rotate-180 2xl:flex hidden" onClick={() => slider.current.swiper.slideNext()}>
               <ArrowIcon />
             </button>
             <Swiper
-              spaceBetween={50}
-              slidesPerView={3}
+              spaceBetween={100}
+              slidesPerView={1}
               loop
+              breakpoints={{
+                1280: {
+                  slidesPerView: 3,
+                  spaceBetween: 100
+                },
+                1024: {
+                  slidesPerView: 2,
+                },
+              }}
               ref={slider}
             >
               {products.map((product: IProductCard, index: number) => {
@@ -105,8 +119,20 @@ export default function Home() {
                   </Fragment>
                 )
               })}
-
             </Swiper>
+          </div>
+          <div className="grid sm:grid-cols-2 grid-cols-1 md:hidden w-full gap-8">
+            {products.map((product: IProductCard, index: number) => {
+              if (index > 2) {
+                return (
+                  <Fragment key={`${index}${product.id}`}>
+                    <div className="w-full">
+                      <ProductCard productImg={product.productImg} productTitle={product.productTitle} productDesc={product.productTitle} isBtnDisabled={product.isDisabled} isRegalato={product.isRegalato} hasBgImg={product.hasBgImg} onBtnClick={() => setShowModal(true)} />
+                    </div>
+                  </Fragment>
+                )
+              }
+            })}
           </div>
         </div>
       </div>
